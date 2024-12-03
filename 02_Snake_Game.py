@@ -42,6 +42,7 @@ snake_body = []  # multiple body tiles
 velocityX = 0
 velocityY = 0
 game_over = False
+score = 0
 
 def change_direction(e): # e = event
     #print(e)
@@ -63,7 +64,7 @@ def change_direction(e): # e = event
         velocityX = 1
         velocityY = 0
 def move():
-    global snake ,food, snake_body, game_over
+    global snake ,food, snake_body, game_over, score
     if (game_over):
         return
     if(snake.x < 0 or snake.x >= WINDOW_WIDTH or snake.y < 0 or snake.y>= WINDOW_HEIGHT):
@@ -80,6 +81,7 @@ def move():
         snake_body.append(Tile(food.x, food.y))
         food.x = random.randint(0, COLS-1) * TILE_SIZE
         food.y = random.randint(0,ROWS-1)
+        score += 1
 
     # update snake body
     for i in range(len(snake_body)-1, -1, -1):
@@ -98,7 +100,7 @@ def move():
 
    
 def draw():
-    global snake
+    global snake, food, snake_body, game_over, score
     move()
     canvas.delete("all")
      # draw food
@@ -107,10 +109,16 @@ def draw():
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green") 
     for tile in snake_body:
         canvas.create_rectangle(tile.x, tile.y, tile.x +TILE_SIZE, tile.y + TILE_SIZE, fill = "lime green")
+    
+    if (game_over):
+        canvas.create_text(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, font= "Arial 20", text = f"Game Over: {score}", fill = "White")
+    else:
+        canvas.create_text(30, 20, font = "Arial 10", text = f"Score: {score}", fill = "White")
     window.after(100,draw)  # 100ms = 1/10 sec , 10 frames/sec
 
 draw() 
 window.bind("<KeyRelease>", change_direction)
 window.mainloop()
+ 
 
-
+        

@@ -67,7 +67,7 @@ def move():
         snake_body.append(Tile(food.x, food.y))
         food.x = random.randint(0, COLS-1) * TILE_SIZE
         food.y = random.randint(0,ROWS-1)
-        
+
     snake.x +=  velocityX * TILE_SIZE
     snake.y += velocityY * TILE_SIZE
 
@@ -80,6 +80,8 @@ def draw():
     canvas.create_rectangle(food.x, food.y, food.x + TILE_SIZE, food.y+ TILE_SIZE, fill = "red")
     # draw snake
     canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green") 
+    for tile in snake_body:
+        canvas.create_rectangle(tile.x, tile.y, tile.x +TILE_SIZE, tile.y + TILE_SIZE, fill = "lime green")
     window.after(100,draw)  # 100ms = 1/10 sec , 10 frames/sec
 
 draw() 

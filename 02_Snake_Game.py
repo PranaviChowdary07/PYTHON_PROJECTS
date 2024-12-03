@@ -7,6 +7,13 @@ TILE_SIZE = 25
 
 WINDOW_WIDTH = TILE_SIZE * ROWS
 WINDOW_HEIGHT = TILE_SIZE * COLS
+
+# Store snake postion and food
+class Tile:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+        
  
  # game window
 window = tkinter.Tk()
@@ -28,7 +35,17 @@ window_y = int((screen_height/2) - (window_height/2))
 # format = (width)x (height) + x + y
 window.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
 
+# initialize the game
+snake = Tile(5*TILE_SIZE, 5*TILE_SIZE) # single tile,snakes's head
 
+def draw():
+    global snake
+
+    # draw snake
+    canvas.create_rectangle(snake.x, snake.y, snake.x + TILE_SIZE, snake.y + TILE_SIZE, fill = "lime green")
+    window.after(100,draw)  # 100ms = 1/10 sec , 10 frames/sec
+
+draw() 
 window.mainloop()
 
 
